@@ -31,6 +31,8 @@ blackfriday:
   
 markup:
   goldmark:
+    extensions:
+      typographer: true
     renderer:
       unsafe: true # allows HTML tags within Markdown file
 
