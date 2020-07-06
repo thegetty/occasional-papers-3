@@ -4,6 +4,7 @@ weight: 1
 menu: false
 epub: false
 type: cover
+class: type-right
 slug: .
 toc: false
 image: cover/op3--getty--932259922.jpg
