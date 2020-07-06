@@ -1,29 +1,46 @@
+:root {
+
+  /* Palette:
+    https://coolors.co/000f27-3d5a88-647a9f-768fb8-eef2f3
+  */
+
+  --color-dark: #000f27;
+  --color-dark-rgb: 0,15,39;
+  /* --color-dark should be the same value as $off-black in
+  themes/quire-starter-theme/source/css/colors.scss */
+  /* --color-dark-rgb is the RGB version used for shading
+  under the cover type when specified in cover.md with the
+  .with-shading class */
+
+  --color-mid-dark: #3d5a88;
+
+  --color-mid-light: #647a9f;
+
+  --color-light: #768fb8;
+  /* --color-light should be the same value as $accent-color in
+   themes/quire-starter-theme/source/css/variables.scss */
+
+}
+
 /* Matching running heads from previous print editions */
 .quire-navbar-page-controls__item {
   text-transform: uppercase;
   letter-spacing: .75px;
   font-weight: 600;
 }
-  
+
 /* Adjusting navbar display */
 .quire-progress-bar {
-  background-color: #1e3253;
-  background-color: #3d5a88;
+  background-color: var(--color-mid-dark);
   height: 6px;
-}
-#cover .quire-progress-bar {
-  background-color: #102343;
-}
-#cover .quire-progress-bar div {
-  background-color: #3f5479;
 }
 .quire-progress-bar div {
   height: 6px;
-  background-color: #768fb8;
+  background-color: var(--color-mid-light);
 }
 .quire-menu__formats h6 {
-  color: #647a9f;
-  border-color: #647a9f;
+  color: var(--color-light);
+  border-color: var(--color-light);
 }
 
 /* Using Source Sans for better font-weight match */
@@ -32,9 +49,9 @@
   font-size: 4rem;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 300;
-  margin-bottom: 0;  
+  margin-bottom: 0;
   background-color: inherit;
-  color: #000f27;
+  color: var(--color-dark);
 }
 
 @media screen {
@@ -51,6 +68,8 @@
     margin: 0 0 .25rem;
     padding: 0;
     line-height: 1;
+    display: block;
+    width: initial;
   }
 }
 @media screen and (max-width: 500px) {
@@ -75,11 +94,16 @@
 
 
 /* Matching page headings */
-.quire-page h1, .quire-page__header__title {
+.quire-page:not(.quire-cover) h1, .quire-page__header__title {
   text-transform: uppercase;
   letter-spacing: .5px;
   font-size: 2.5rem;
   font-weight: 700;
+}
+@media screen {
+  .quire-page:not(.quire-cover) h1, .quire-page__header__title {
+    text-align: center;
+  }
 }
 .quire-page h2,
 .quire-page__content .content h2 {
@@ -111,6 +135,7 @@
 }
 
 /* Updating cover for design match and to accomodate series info */
+/* Updating cover for design match and to accomodate series info */
 .quire-cover__hero {
   background-color: #000;
   background-image: none;
@@ -118,36 +143,61 @@
 }
 .hero.is-fullheight .hero-body {
   padding: 0;
+  height: calc(95vh - 6rem);
+  justify-content: space-between;
+}
+.quire-page--with-shading .quire-cover__hero-shading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(-90deg, rgba(var(--color-dark-rgb),0.3), rgba(0,0,0,0));
+}
+.quire-page--with-shading.quire-page--type-left .quire-cover__hero-shading {
+  background-image: linear-gradient(90deg, rgba(var(--color-dark-rgb),0.3), rgba(0,0,0,0));
 }
 .quire-cover__hero-body.hero-body {
+  position: absolute;
   flex-direction: column;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.quire-page--type-left .quire-cover__hero-body.hero-body {
+  margin-left: 5%;
+  margin-right: 50%;
+}
+.quire-cover__hero-body.hero-body,
+.quire-page--type-right .quire-cover__hero-body.hero-body {
   margin-left: 50%;
   margin-right: 5%;
-  margin-top: 1.5rem;
-  margin-bottom: 3rem;
 }
 .quire-cover__hero .series-info {
   color: #fff;
   text-transform: uppercase;
-  font-size: 1.35vw;
+  font-size: 1.3vw;
   letter-spacing: .5px;
-  padding-right: 25%;
   font-family: "Archivo Narrow", sans-serif;
 }
 .quire-cover__hero .series-info .series-name {
   font-weight: 700;
   margin-bottom: 1em;
+  float: left;
+  width: 58%;
 }
 .quire-cover__hero .series-info .series-number,
 .quire-cover__hero .series-info .pub-date {
   letter-spacing: 1px;
 }
+.quire-cover__hero .series-info .series-number-and-date {
+  float: right;
+  width: 25%;
+}
 .quire-cover__hero .title {
   font-size: 5.5vw;
-  margin-top: 1.25em;
+  margin: 0 !important;
+  line-height: .97;
 }
 .quire-cover__hero .subtitle {
-  font-size: 3vw;
+  font-size: 2.9vw;
   line-height: 1.15;
   margin-top: .4em;
 }
@@ -155,7 +205,9 @@
   font-size: 1.9vw;
   text-transform: uppercase;
   letter-spacing: .5px;
-  margin-top: 5em;
+  margin-top: .5rem;
+  margin-bottom: 2rem;
+  width: 100%;
 }
 .quire-cover__hero .contributor .small {
   font-size: .65em;
@@ -164,66 +216,107 @@
   font-style: normal;
 }
 .quire-cover__more .hero-more {
-  background-color: #5a6283;
-  background-color: #647a9f;
+  background-color: var(--color-light);
 }
 .quire-cover .quire-page__content .container.is-fluid .content {
-  color: #000f27;
+  color: var(--color-dark);
+}
+.quire-cover__more .hero-more svg {
+  margin-top: .2rem;
+  margin-left: .2rem;
 }
 
 @media screen and (max-width: 900px) {
   .quire-cover__hero .series-info {
-    font-size: 1.45vw;
+    font-size: 1.35vw;
   }
   .quire-cover__hero .title {
     font-size: 6.5vw;
-    margin-top: 1.25em;
   }
   .quire-cover__hero .subtitle {
-    font-size: 3.5vw;
-    margin-top: .4em;
+    font-size: 3.4vw;
+    margin-top: .3em;
   }
   .quire-cover__hero .contributor {
     font-size: 2vw;
-    margin-top: 5em;
+  }
+}
+/* for large tablets in portrait mode */
+@media screen and (max-width: 900px) and (min-height: 900px) {
+  .quire-page--with-shading .quire-cover__hero-shading {
+    background-image: linear-gradient(-135deg, rgba(var(--color-dark-rgb),0.4), rgba(0,0,0,0));
+  }
+  .quire-page--with-shading.quire-page--type-left .quire-cover__hero-shading {
+    background-image: linear-gradient(135deg, rgba(var(--color-dark-rgb),0.4), rgba(0,0,0,0));
+  }
+  .hero.is-fullheight .hero-body {
+    height: calc(55vh - 6rem);
+  }
+  .quire-cover__hero .title {
+    margin-top: 1.5rem;
+  }
+  .quire-cover__hero .contributor {
+    margin-top: 1.5rem;
   }
 }
 @media screen and (max-width: 700px) {
   .quire-cover__hero .series-info {
-    font-size: 1.75vw;
+    font-size: 1.65vw;
   }
   .quire-cover__hero .title {
-    font-size: 7.5vw;
-    margin-top: 1.25em;
+    font-size: 7.3vw;
   }
   .quire-cover__hero .subtitle {
-    font-size: 4.5vw;
-    margin-top: .4em;
+    font-size: 4.2vw;
   }
   .quire-cover__hero .contributor {
-    font-size: 3vw;
-    margin-top: 5em;
+    font-size: 2.8vw;
   }
 }
 @media screen and (max-width: 400px) {
-  .quire-cover__hero-body.hero-body {
+  .quire-page--with-shading .quire-cover__hero-shading,
+  .quire-page--with-shading.quire-page--type-left .quire-cover__hero-shading {
+    background-image: none;
+    background-color: rgba(var(--color-dark-rgb),0.4);
+  }
+  .quire-page--type-left .quire-cover__hero-body.hero-body {
+    margin-right: 5%;
+    text-align: center;
+  }
+  .quire-cover__hero-body.hero-body,
+  .quire-page--type-right .quire-cover__hero-body.hero-body {
     margin-left: 5%;
     text-align: center;
   }
   .quire-cover__hero .series-info {
-    font-size: .75rem;
-    padding-right: 0;
+    font-size: .8125rem;
+  }
+  .quire-cover__hero .series-info .series-name,
+  .quire-cover__hero .series-info .series-number-and-date {
+    float: none;
+    width: 100%;
+  }
+  .quire-cover__hero .series-info .series-number,
+  .quire-cover__hero .series-info .pub-date {
+    display: inline-block;
+    margin: 0 1rem;
+  }
+  .quire-cover__hero .series-info .series-name {
+    margin-bottom: .5rem;
   }
   .quire-cover__hero .title {
-    font-size: 3rem;
-    margin-top: .5em;
+    font-size: 2.75rem;
+    margin: 0 .5rem;
   }
   .quire-cover__hero .subtitle {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
   }
   .quire-cover__hero .contributor {
     font-size: 1.25rem;
-    margin-top: 3em;
+    margin-top: 0;
+    margin-bottom: .75rem;
   }
 }
 
@@ -253,7 +346,7 @@
   .quire-page__header .hero-body .label {
     margin: 0;
   }
-  .quire-page h1, .quire-page__header__title {
+  .quire-page:not(.quire-cover) h1, .quire-page__header__title {
     margin-top: 0;
     text-align: left;
     margin-left: .75in;
@@ -274,7 +367,7 @@
   .title-page {
     text-align: left;
     padding-left: 1.375in;
-    padding-right: 1.125in;  
+    padding-right: 1.125in;
     padding-top: .875in;
   }
   .title-page .series-name,
@@ -324,12 +417,12 @@
     margin-top: .5in;
   }
   #copyright .quire-page__content {
-    text-align: left; 
+    text-align: left;
     max-width: 4.25in;
     margin-left: 0;
   }
   #copyright .quire-page__content .container .content .backmatter {
-    padding-top: 2.125in;
+    /* padding-top: 2.125in; */
   }
   #copyright .quire-page__header.hero {
     display: none;
@@ -345,7 +438,7 @@
     background-color: #000;
     width: 3in;
     height: .5pt;
-  }  
+  }
   #contents .quire-contents-list,
   #contents .quire-page__header__title {
     margin-left: 1.75in;
@@ -379,8 +472,18 @@
 }
 
  /* Style footnotes using custom q-note shortcode */
- .quire-citation {
+
+ /* make appear as if new section with line break above and no text indent */
+ .quire-citation.name {
+   margin-left: -1.5rem;
+   margin-top: 1rem;
    display: inline-block;
+ }
+
+ /* but not for the first paragraph on the page */
+ .quire-page__content .content > p:first-child .quire-citation.name {
+   margin-left: 0;
+   margin-top: 0;
  }
  @media print {
    .content sup.quire-citation {
@@ -396,16 +499,26 @@
 .quire-citation__button:hover {
   border-bottom-width: 0;
 }
-.quire-citation .quire-citation__content {
-  font-size: 1.125em;
+.quire-citation__button.name-button {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: .5em;
+  font-family: "Archivo Narrow", sans-serif;
+  color: var(--color-mid-light);
+}
+@media print {
+  .quire-citation__button.name-button {
+    color: #000;
+  }
 }
 
 /* Overriding default color */
 strong {
-  color: #000f27;
+  color: var(--color-dark);
 }
 .backmatter .quire-copyright__icon * {
-  fill: #000f27;
+  fill: var(--color-dark);
 }
 
 /* Styling copyright and about pages */
@@ -421,21 +534,13 @@ strong {
   }
 }
 
-/* Change styling of Foreword author byline */
-#foreword .quire-contributor * {
-  font-style: normal;
-}
-#foreword .quire-contributor__name {
-  font-weight: bold;
-}
-
 /* Restyle blockquote  */
 .quire-page__content .content blockquote {
   font-style: normal;
 }
 @media screen {
   .quire-page__content .content blockquote {
-    padding: 0; 
+    padding: 0;
   }
 }
 .quire-page__content .content blockquote + p {
@@ -450,7 +555,7 @@ strong {
   /* PrinceXML doesn’t seem to support <wbr> embedded in the URLs as a
   method for suggesting places to break words, instead we're using here
   the prince-text-replace specialty attribute to insert zero-width-spaces */
-  a[target=_blank] {
+  a:not([href^="#"]):not([href^="/"]) {
     prince-text-replace: "/" "\200B/"
                           "~" "\200B~"
                           "." "\200B."
@@ -486,4 +591,70 @@ strong {
 }
 .quire-menu .quire-copyright + .menu-list {
   margin-left: -.5em;
+}
+
+/* Adjust appearance of contributor names */
+.content ul.quire-contributors-list.name-title-block .quire-contributor {
+  width: 100%;
+  margin-bottom: 1rem;
+  page-break-inside: avoid;
+}
+.content ul.quire-contributors-list.name-title-block .quire-contributor__title,
+.content ul.quire-contributors-list.name-title-block .quire-contributor__affiliation {
+  font-style: normal;
+}
+.content ul.quire-contributors-list.name-title-block .quire-contributor__name {
+  font-weight: bold;
+}
+@media print {
+  .content ul.quire-contributors-list.name-title-block {
+    display: inherit;
+  }
+}
+
+/* Indent following blockquote */
+.content .indent_following_blockquote + p {
+  text-indent: 1.5rem;
+}
+
+/* Break paragraphs with line space and no indent in blockquotes */
+.quire-page__content .content blockquote p {
+  margin-bottom: 1rem;
+  text-indent: 0;
+}
+
+/* Fix spacing for lists in print */
+@media print {
+  .quire-page__content .content ul {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Remove top margin from notes list and others */
+.content ol:first-child {
+  margin-top: 0;
+}
+
+
+/* SPECIFIC FOR OCCASIONAL PAPERS #3
+============================================================================= */
+
+/* Adjust coloring where nav bar is against dark image */
+#cover .quire-progress-bar {
+  background-color: #102343;
+}
+#cover .quire-progress-bar div {
+  background-color: #3f5479;
+}
+
+/* Change styling of Foreword author byline */
+#foreword .quire-contributor * {
+  font-style: normal;
+}
+#foreword .quire-contributor__name {
+  font-weight: bold;
+}
+
+.quire-citation .quire-citation__content {
+  font-size: 1.125em;
 }
