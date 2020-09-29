@@ -660,3 +660,14 @@ strong {
 .quire-citation .quire-citation__content {
   font-size: 1.125em;
 }
+
+/* Make copyright page 2-column */
+@media print {
+  #copyright .quire-page__content {
+    column-count: 2;
+    max-width: none;
+  }
+  #copyright .quire-page__content .container .content hr {
+    width: 100%;
+  }
+}
